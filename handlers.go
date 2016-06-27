@@ -11,3 +11,13 @@ func myIndexHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println(r.Method, r.URL, r.Proto, r.RemoteAddr, r.UserAgent())
 	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
 }
+
+func tasksHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.Method, r.URL, r.Proto, r.RemoteAddr, r.UserAgent())
+	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+}
+
+func tasksIDHandler(w http.ResponseWriter, r *http.Request) {
+	log.Println(r.Method, r.URL, r.Proto, r.RemoteAddr, r.UserAgent())
+	fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+}

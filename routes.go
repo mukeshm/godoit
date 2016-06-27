@@ -14,4 +14,12 @@ var routes = Routes{
 		"/api",
 		myIndexHandler,
 	},
+	Route{
+		"/api/tasks",
+		tasksHandler,
+	},
+	Route{
+		"/api/tasks/id",
+		tasksIDHandler,
+	},
 }
