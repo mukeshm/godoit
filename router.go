@@ -1,11 +1,11 @@
 package main
 
-import "net/http"
+import "github.com/gorilla/mux"
 
-func newRouter() *http.ServeMux{
-	router := http.NewServeMux()
-	for _, v := range routes{
-		router.HandleFunc(v.Name, v.HandlerFunc)
+func newRouter() *mux.Router {
+	router := mux.NewRouter()
+	for _, v := range routes {
+		router.Methods(v.Method).Path(v.Pattern).HandlerFunc(v.HandlerFunc)
 	}
 	return router
 }
