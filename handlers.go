@@ -27,7 +27,7 @@ func showTask(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	t, err := GetTask(vars["taskID"])
 	if err != nil {
-		fmt.Fprintf(w, "%+v", err)
+		fmt.Fprintf(w, "%+v", errorToJSON(err))
 	} else {
 		fmt.Fprintf(w, "%v", taskToJSON(t))
 	}
@@ -39,10 +39,9 @@ func insertTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	t, err := createTask(r.Body)
 	if err != nil {
-		fmt.Fprintf(w, "%+v", err)
+		fmt.Fprintf(w, "%+v", errorToJSON(err))
 	} else {
 		AddTask(t)
-		fmt.Printf("%v\n", t)
 		fmt.Fprintf(w, "%+v", t)
 	}
 }
@@ -53,7 +52,7 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	err := DeleteTask(vars["taskID"])
 	if err != nil {
-		fmt.Fprintf(w, "%+v", err)
+		fmt.Fprintf(w, "%+v", errorToJSON(err))
 	} else {
 		fmt.Fprintf(w, "Task %v removed", vars["taskID"])
 	}
@@ -65,11 +64,11 @@ func updateTask(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	t, e := jsonToTask(r.Body)
 	if e != nil {
-		fmt.Fprintf(w, "Error updating task :%+v", e)
+		fmt.Fprintf(w, "%+v", errorToJSON(e))
 	} else {
 		err := UpdateTask(vars["taskID"], t)
 		if err != nil {
-			fmt.Fprintf(w, "%+v", err)
+			fmt.Fprintf(w, "%+v", errorToJSON(err))
 		} else {
 			fmt.Fprintf(w, "Task %v updated", vars["taskID"])
 		}
