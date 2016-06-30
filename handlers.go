@@ -27,6 +27,7 @@ func showTask(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	t, err := GetTask(vars["taskID"])
 	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "%+v", errorToJSON(err))
 	} else {
 		fmt.Fprintf(w, "%v", taskToJSON(t))
@@ -39,9 +40,11 @@ func insertTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	t, err := createTask(r.Body)
 	if err != nil {
+		w.WriteHeader(http.StatusNotAcceptable)
 		fmt.Fprintf(w, "%+v", errorToJSON(err))
 	} else {
 		AddTask(t)
+		w.WriteHeader(http.StatusCreated)
 		fmt.Fprintf(w, "%+v", taskToJSON(t))
 	}
 }
@@ -52,6 +55,7 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	err := DeleteTask(vars["taskID"])
 	if err != nil {
+		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "%+v", errorToJSON(err))
 	} else {
 		fmt.Fprintf(w, "%v", successToJSON("Task "+vars["taskID"]+" removed"))
