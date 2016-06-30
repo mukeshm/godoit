@@ -25,3 +25,16 @@ func DeleteTask(id string) error {
 func GetTasks() Tasks {
 	return tasks
 }
+
+func UpdateTask(id string, t Task) error {
+	val, ok := tasks[id]
+	if ok {
+		val.Completed = t.Completed
+		val.Due = t.Due
+		val.Id = id
+		val.Title = t.Title
+		tasks[id] = val
+		return nil
+	}
+	return errors.New("failed to update task : task does not exist")
+}

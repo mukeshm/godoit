@@ -36,6 +36,16 @@ func taskToJSON(t Task) string {
 	return string(bs)
 }
 
+func jsonToTask(r io.Reader) (Task, error) {
+	var task Task
+	err := json.NewDecoder(r).Decode(&task)
+	if err != nil {
+		//return task, errors.New("Malformed data")
+		return task, err
+	}
+	return task, nil
+}
+
 func getTasks() string {
 	ba, err := json.Marshal(tasks)
 	if err != nil {
