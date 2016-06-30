@@ -13,6 +13,6 @@ type Task struct {
 type Tasks map[string]Task
 
 type ErrorStruct struct {
-	Kind        string    `json:"kind"`
-	Message     string    `json:"message"`
+	Kind    string `json:"kind"`
+	Message string `json:"message"`
 }

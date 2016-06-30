@@ -42,7 +42,7 @@ func insertTask(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%+v", errorToJSON(err))
 	} else {
 		AddTask(t)
-		fmt.Fprintf(w, "%+v", t)
+		fmt.Fprintf(w, "%+v", taskToJSON(t))
 	}
 }
 
@@ -54,7 +54,7 @@ func deleteTask(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Fprintf(w, "%+v", errorToJSON(err))
 	} else {
-		fmt.Fprintf(w, "Task %v removed", vars["taskID"])
+		fmt.Fprintf(w, "%v", successToJSON("Task "+vars["taskID"]+" removed"))
 	}
 }
 
@@ -70,7 +70,7 @@ func updateTask(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			fmt.Fprintf(w, "%+v", errorToJSON(err))
 		} else {
-			fmt.Fprintf(w, "Task %v updated", vars["taskID"])
+			fmt.Fprintf(w, "%v", successToJSON("Task "+vars["taskID"]+" updated"))
 		}
 	}
 }

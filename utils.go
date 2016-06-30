@@ -47,6 +47,17 @@ func errorToJSON(e error) string {
 	return string(bs)
 }
 
+func successToJSON(msg string) string {
+	var es ErrorStruct
+	es.Kind = "success"
+	es.Message = msg
+	bs, err := json.Marshal(es)
+	if err != nil {
+		return ""
+	}
+	return string(bs)
+}
+
 func jsonToTask(r io.Reader) (Task, error) {
 	var task Task
 	err := json.NewDecoder(r).Decode(&task)
